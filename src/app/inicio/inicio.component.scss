@@ -1,0 +1,50 @@
+.titulo{
+    vertical-align: middle;
+}
+.tabla-jugadores{
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    .comprar{
+        width:         70px;
+    }
+    .puntos{
+        width: 60px;
+    }
+    .medias{
+        width: 170px;
+    }
+    .posicion, .duenyo{
+        width: 100px;
+    }
+    .nombre{
+        width: 200px;
+    }
+    .precio,.clausula{
+        width: 100px;
+    }
+    .fin-clausula{
+        width: 150px;
+    }
+    .media{
+        border: 1px solid gray;
+        border-radius: 6px;
+        display: inline-block;
+        line-height: 0px;
+        margin-right: 4px;
+        padding-left: 6px;
+        background-color: black;
+        color: white;
+    }
+    .pts{
+        border: 1px solid gray;
+        border-radius: 6px;
+        width:24px;
+        display: inline-block;
+        &.total{
+            background-color: gray;
+            color: white;
+            margin-left: 4px;
+        }
+    }
+}

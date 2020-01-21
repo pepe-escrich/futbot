@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/futbot",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
