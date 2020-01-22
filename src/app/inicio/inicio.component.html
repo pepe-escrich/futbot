@@ -37,7 +37,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-jugador>
                 <tr>
-                    <td  [pTooltip]="'To unlock: ' + jugador.daysToUnlock">
+                    <td  [pTooltip]="jugador.daysToUnlock &gt; 0 ? 'To unlock: ' + jugador.daysToUnlock : 'Unlocked'">
                         <i class="fa fa-lock customLockIcon" [style.color]="jugador.lockColor"></i>
                     </td>
                     <td>
