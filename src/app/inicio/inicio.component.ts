@@ -73,7 +73,7 @@ export class InicioComponent implements OnInit, OnDestroy {
           const jugador: Jugador = {
             id: item.id, computer: item.computer, name: item.name, points: item.points, role: item.role,
             slug: item.slug, userteam: item.userteam, value: item.value, clauseDate: new Date(item.clause.date), clausePrice: item.clause.price, avg: item.average.average,
-            homeAvg: item.average.homeAverage, awayAvg: item.average.awayAverage, lastFiveAvg: item.average.homeAverage, lastPts: item.average.fitness
+            homeAvg: item.average.homeAverage, awayAvg: item.average.awayAverage, lastFiveAvg: item.average.averageLastFive, lastPts: item.average.fitness
           };
           this.jugadores.push(jugador);
 

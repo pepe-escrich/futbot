@@ -1,65 +1,68 @@
-<h1 class="titulo"><img src="https://regmedia.co.uk/2015/03/06/bender_the_robot.jpg?x=442&y=293&crop=1"
-        style="height: 100px;">
-    FUTBOT Beta</h1>
+<div clas="head">
+    <img src="assets/images/bothead.png" style="height: 100px;">
+</div>
+<div class="content">
+    <table>
+        <tr>
+            <td>
+                <button pButton type="button" icon="pi pi-sign-in" iconPos="left" (click)="onClickLogin()"
+                    label="Login Futmondo"></button>
+            </td>
+            <td>
+                <button pButton type="button" icon="pi pi-arrow-circle-right" iconPos="left" (click)="onClickCargar()"
+                    label="Cargar jugadores"></button>
+            </td>
+            <td>
+                <label style="margin-left: 16px;">Desbloqueo en </label>
+                <input type="text" pInputText [(ngModel)]="diasDesbloqueo" style="width:50px" />
+                <label>días</label>
+            </td>
+        </tr>
+    </table>
 
-<table>
-    <tr>
-        <td>
-            <button pButton type="button" icon="pi pi-sign-in" iconPos="left" (click)="onClickLogin()"
-                label="Login Futmondo"></button>
-        </td>
-        <td>
-            <button pButton type="button" icon="pi pi-arrow-circle-right" iconPos="left" (click)="onClickCargar()"
-                label="Cargar jugadores"></button>
-        </td>
-        <td>
-            <label style="margin-left: 16px;">Desbloqueo en </label>
-            <input type="text" pInputText [(ngModel)]="diasDesbloqueo" style="width:50px" />
-            <label>días</label>
-        </td>
-    </tr>
-</table>
-
-<br>
-<div>
-    <p-table [value]="jugadores" class="tabla-jugadores">
-        <ng-template pTemplate="header">
-            <tr>
-                <th class="comprar">Comprar</th>
-                <th class="puntos">Puntos</th>
-                <th class="medias">Medias</th>
-                <th class="nombre">Jugador</th>
-                <th class="duenyo">Dueño</th>
-                <th class="precio">Precio</th>
-                <th class="clausula">Clausula</th>
-                <th class="fin-clausula">Fin clausula</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-jugador>
-            <tr>
-                <td>
-                    <p-checkbox [(ngModel)]="jugador.comprar" binary="true"></p-checkbox>
-                </td>
-                <td>
-                    <h2>{{jugador.points}}</h2>
-                </td>
-                <td>
-                    <div >
-                        <div class="media">
-                        <h2 style="display:inline-block">{{jugador.avg | number:'1.0-0':'es' }}</h2>&nbsp;&nbsp;
-                        <i class="fa fa-fw fa-home"></i>{{jugador.homeAvg | number:'1.0-0':'es' }}
-                        <i class="fa fa-fw fa-plane"></i>{{jugador.awayAvg | number:'1.0-0':'es' }}&nbsp;&nbsp;
+    <br>
+    <div style="width:100px">
+        <p-table [value]="jugadores" class="tabla-jugadores">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="comprar">Comprar</th>
+                    <th class="puntos">Puntos</th>
+                    <th class="medias">Medias</th>
+                    <th class="precio">Precio / Clausula</th>
+                    <th class="fin-clausula">Fin clausula</th>
+                    <th class="nombre">Jugador</th>
+                    <th class="duenyo">Dueño</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-jugador>
+                <tr>
+                    <td>
+                        <p-checkbox [(ngModel)]="jugador.comprar" binary="true"></p-checkbox>
+                    </td>
+                    <td>
+                        <h2>{{jugador.points}}</h2>
+                    </td>
+                    <td>
+                        <div>
+                            <div class="media">
+                                <h2 style="display:inline-block">{{jugador.avg | number:'1.0-0':'es' }}</h2>&nbsp;&nbsp;
+                                <i class="fa fa-fw fa-home"></i>{{jugador.homeAvg | number:'1.0-0':'es' }}
+                                <i class="fa fa-fw fa-plane"></i>{{jugador.awayAvg | number:'1.0-0':'es' }}&nbsp;&nbsp;
+                            </div>
+                            <div class="pts" *ngFor="let pts of jugador.lastPts">
+                                &nbsp;{{pts | number:'1.0-0':'es' }}&nbsp;
+                            </div>
+                            <div class="pts total"><strong>{{jugador.lastFiveAvg | number:'1.0-0':'es' }}</strong>&nbsp;
+                            </div>
                         </div>
-                        <div class="pts" *ngFor="let pts of jugador.lastPts"> &nbsp;{{pts | number:'1.0-0':'es' }}&nbsp;</div>
-                        <div class="pts total"><strong>{{jugador.lastFiveAvg | number:'1.0-0':'es' }}</strong>&nbsp;</div>
-                    </div>
-                </td>
-                <td><strong>{{jugador.name}}</strong> ({{jugador.role}})</td>
-                <td>{{jugador.computer?'Futmondo':jugador.userteam}}</td>
-                <td>{{jugador.value | number:'1.0-0':'es'}}</td>
-                <td>{{jugador.clausePrice | number:'1.0-0':'es'}}</td>
-                <td>{{jugador.clauseDate | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
-            </tr>
-        </ng-template>
-    </p-table>
+                    </td>
+                    <td [attr.title]="(jugador.value | number:'1.0-0':'es') + ' / '  + (jugador.clausePrice | number:'1.0-1':'es') ">
+                        {{jugador.value/1000000 | number:'1.0-0':'es'}}M / <strong>{{jugador.clausePrice/1000000 | number:'1.0-1':'es'}}M</strong></td>
+                    <td [attr.title]="jugador.clauseDate | date: 'dd/MM/yyyy HH:mm:ss' ">{{jugador.clauseDate | date: 'dd/MM'}}</td>
+                    <td class="nombre-left"><strong>{{jugador.name}}</strong> ({{jugador.role}})</td>
+                    <td>{{jugador.computer?'Futmondo':jugador.userteam}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
 </div>
