@@ -2,6 +2,8 @@ export interface Jugador {
     id: string;
     computer:boolean;
     name: string;
+    lockColor?:string;
+    daysToUnlock?:number;
     points:number;
     role:string;
     slug:string;

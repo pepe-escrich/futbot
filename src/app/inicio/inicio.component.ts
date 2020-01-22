@@ -57,6 +57,7 @@ export class InicioComponent implements OnInit, OnDestroy {
       this.futmondoService.obtenerJugadores(this.championshipId).subscribe(result => {
         // console.table(result.answer.players);
         result.answer.players.forEach(item => {
+          let lockColor: string;
 
           if (item.computer) {
             return;
@@ -65,6 +66,12 @@ export class InicioComponent implements OnInit, OnDestroy {
             return;
           }
 
+          if(new Date(item.clause.date) < new Date()){
+            lockColor = '#17773d';
+          } else {
+            lockColor = '#bf0000';
+          }
+          
           const fecha = moment(item.clause.date);
           if (fecha.isAfter(fechaMinDesbloqueo)) {
             return;
@@ -73,7 +80,8 @@ export class InicioComponent implements OnInit, OnDestroy {
           const jugador: Jugador = {
             id: item.id, computer: item.computer, name: item.name, points: item.points, role: item.role,
             slug: item.slug, userteam: item.userteam, value: item.value, clauseDate: new Date(item.clause.date), clausePrice: item.clause.price, avg: item.average.average,
-            homeAvg: item.average.homeAverage, awayAvg: item.average.awayAverage, lastFiveAvg: item.average.averageLastFive, lastPts: item.average.fitness
+            homeAvg: item.average.homeAverage, awayAvg: item.average.awayAverage, lastFiveAvg: item.average.averageLastFive, lastPts: item.average.fitness, lockColor: lockColor,
+            daysToUnlock: (Math.ceil( (new Date(item.clause.date).getTime() - new Date().getTime()) / (1000 * 3600 * 24)))
           };
           this.jugadores.push(jugador);
 

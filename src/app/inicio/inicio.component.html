@@ -25,6 +25,7 @@
         <p-table [value]="jugadores" class="tabla-jugadores">
             <ng-template pTemplate="header">
                 <tr>
+                    <th class="icon"></th>
                     <th class="comprar">Comprar</th>
                     <th class="puntos">Puntos</th>
                     <th class="medias">Medias</th>
@@ -36,6 +37,9 @@
             </ng-template>
             <ng-template pTemplate="body" let-jugador>
                 <tr>
+                    <td  [pTooltip]="'To unlock: ' + jugador.daysToUnlock">
+                        <i class="fa fa-lock customLockIcon" [style.color]="jugador.lockColor"></i>
+                    </td>
                     <td>
                         <p-checkbox [(ngModel)]="jugador.comprar" binary="true"></p-checkbox>
                     </td>
