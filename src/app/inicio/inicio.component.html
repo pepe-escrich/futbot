@@ -6,7 +6,7 @@
         <tr>
             <td>
                 <button pButton type="button" icon="pi pi-sign-in" iconPos="left" (click)="onClickLogin()"
-                    label="Login Futmondo"></button>
+                    label="Login Futmondol"></button>
             </td>
             <td>
                 <button pButton type="button" icon="pi pi-arrow-circle-right" iconPos="left" (click)="onClickCargar()"
@@ -17,6 +17,17 @@
                 <input type="text" pInputText [(ngModel)]="diasDesbloqueo" style="width:50px" />
                 <label>días</label>
             </td>
+            <div>
+                <label style="margin-left: 16px;margin-right: 4px;vertical-align: -3px;">Posición</label>
+                <p-dropdown [options]="posiciones" [(ngModel)]="filtroPosicion" placeholder="..." appendTo="body"
+                    [style]="{'height': '33px'}">
+                </p-dropdown>
+            </div>
+            <td>
+                <span style="margin-left: 16px;"></span>
+                <p-checkbox [(ngModel)]="ordenPrecio" binary="true" label="Ordenar por aumento precio"></p-checkbox>
+            </td>
+
         </tr>
     </table>
 
@@ -37,7 +48,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-jugador>
                 <tr>
-                    <td  [pTooltip]="jugador.daysToUnlock &gt; 0 ? 'To unlock: ' + jugador.daysToUnlock : 'Unlocked'">
+                    <td [pTooltip]="jugador.daysToUnlock &gt; 0 ? 'To unlock: ' + jugador.daysToUnlock : 'Unlocked'">
                         <i class="fa fa-lock customLockIcon" [style.color]="jugador.lockColor"></i>
                     </td>
                     <td>
@@ -60,9 +71,15 @@
                             </div>
                         </div>
                     </td>
-                    <td [attr.title]="(jugador.value | number:'1.0-0':'es') + ' / '  + (jugador.clausePrice | number:'1.0-1':'es') ">
-                        {{jugador.value/1000000 | number:'1.0-0':'es'}}M / <strong>{{jugador.clausePrice/1000000 | number:'1.0-1':'es'}}M</strong></td>
-                    <td [attr.title]="jugador.clauseDate | date: 'dd/MM/yyyy HH:mm:ss' ">{{jugador.clauseDate | date: 'dd/MM'}}</td>
+                    <td
+                        [attr.title]="(jugador.value | number:'1.0-0':'es') + ' / '  + (jugador.clausePrice | number:'1.0-1':'es') ">
+                        <div>{{jugador.value/1000000 | number:'1.0-0':'es'}}M /
+                            <strong>{{jugador.clausePrice/1000000 | number:'1.0-1':'es'}}M</strong></div>
+                        <div class="change" [ngClass]="jugador.change>=0?'verde':'rojo'">
+                            {{jugador.change | number:'1.0-0':'es'}}</div>
+                    </td>
+                    <td [attr.title]="jugador.clauseDate | date: 'dd/MM/yyyy HH:mm:ss' ">
+                        {{jugador.clauseDate | date: 'dd/MM'}}</td>
                     <td class="nombre-left"><strong>{{jugador.name}}</strong> ({{jugador.role}})</td>
                     <td>{{jugador.computer?'Futmondo':jugador.userteam}}</td>
                 </tr>

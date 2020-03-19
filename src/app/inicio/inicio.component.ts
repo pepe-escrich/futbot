@@ -2,6 +2,7 @@ import { Jugador } from './../models/futbot.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FutmondoService } from '../services/futmondo.service';
 import * as moment from 'moment';
+import { SelectItem } from 'primeng/api/selectitem';
 
 @Component({
   selector: 'app-inicio',
@@ -21,10 +22,21 @@ export class InicioComponent implements OnInit, OnDestroy {
   maxHoraComprar: moment.Moment;
 
   diasDesbloqueo = 1;
+  filtroPosicion = undefined;
+  posiciones: SelectItem[];
 
   w;
 
-  constructor(private futmondoService: FutmondoService) { }
+  ordenPrecio = false;
+
+  constructor(private futmondoService: FutmondoService) {
+    this.posiciones = [];
+    this.posiciones.push({ value: undefined, label: '' });
+    this.posiciones.push({ value: 'portero', label: 'portero' });
+    this.posiciones.push({ value: 'defensa', label: 'defensa' });
+    this.posiciones.push({ value: 'centrocampista', label: 'centrocampista' });
+    this.posiciones.push({ value: 'delantero', label: 'delantero' });
+  }
 
   ngOnInit() {
     this.startTimer();
@@ -66,29 +78,40 @@ export class InicioComponent implements OnInit, OnDestroy {
             return;
           }
 
-          if(new Date(item.clause.date) < new Date()){
+          if (new Date(item.clause.date) < new Date()) {
             lockColor = '#17773d';
           } else {
             lockColor = '#bf0000';
           }
-          
+
           const fecha = moment(item.clause.date);
           if (fecha.isAfter(fechaMinDesbloqueo)) {
             return;
+          }
+
+          if (this.filtroPosicion) {
+            if (this.filtroPosicion !== item.role) {
+              return;
+            }
           }
 
           const jugador: Jugador = {
             id: item.id, computer: item.computer, name: item.name, points: item.points, role: item.role,
             slug: item.slug, userteam: item.userteam, value: item.value, clauseDate: new Date(item.clause.date), clausePrice: item.clause.price, avg: item.average.average,
             homeAvg: item.average.homeAverage, awayAvg: item.average.awayAverage, lastFiveAvg: item.average.averageLastFive, lastPts: item.average.fitness, lockColor: lockColor,
-            daysToUnlock: (Math.ceil( (new Date(item.clause.date).getTime() - new Date().getTime()) / (1000 * 3600 * 24)))
+            change: item.change,
+            daysToUnlock: (Math.ceil((new Date(item.clause.date).getTime() - new Date().getTime()) / (1000 * 3600 * 24)))
           };
           this.jugadores.push(jugador);
 
         });
 
         this.jugadores = this.jugadores.sort((a, b) => {
-          return b.clauseDate.getTime() - a.clauseDate.getTime();
+          if (this.ordenPrecio) {
+            return b.change - a.change;
+          } else {
+            return b.clauseDate.getTime() - a.clauseDate.getTime();
+          }
         });
 
       });
@@ -125,7 +148,7 @@ export class InicioComponent implements OnInit, OnDestroy {
         this.futmondoService.dameInfoCampeonato().subscribe(result => {
           console.log("END reloading futmondo window");
         });
-        
+
       }
 
     }, this.intervalMillis)

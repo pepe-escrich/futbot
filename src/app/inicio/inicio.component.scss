@@ -90,4 +90,17 @@
             margin-left: 4px;
         }
     }
+    .change{
+        font-size: 10px;
+        &.verde{
+            color:green;
+        }
+        &.rojo{
+            color:#bf0000;
+        }
+    }
+}
+
+::ng-deep .ui-dropdown-label-container{
+    line-height: 13px;
 }

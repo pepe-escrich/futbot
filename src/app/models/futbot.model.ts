@@ -17,4 +17,5 @@ export interface Jugador {
     awayAvg?:number;
     lastPts?:number[];
     lastFiveAvg?:number;
+    change?:number;
 }

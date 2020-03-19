@@ -31,6 +31,7 @@ import {ToggleButtonModule} from 'primeng/togglebutton';
 import { FutmondoService } from './services/futmondo.service';
 import { HttpClientModule } from '@angular/common/http';
 import {CheckboxModule} from 'primeng/checkbox';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es'; // to register french
@@ -46,6 +47,7 @@ import { MomentModule } from 'ngx-moment';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     CommonModule,
     FormsModule,
     HttpClientModule,
