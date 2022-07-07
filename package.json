@@ -21,7 +21,7 @@
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
     "font-awesome": "^4.7.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "ngx-moment": "^3.5.0",
     "primeicons": "^2.0.0",
     "primeng": "^9.0.0-rc.2",
